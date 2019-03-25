@@ -2,4 +2,17 @@
 .jumbotron
   = @movie.description
 - if user_signed_in?
-  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
+  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie),
+  class: 'btn btn-sm btn-default'
+
+%h3 Add new comment
+= render 'comments_table'
+%h3 Comments
+- @movie.comments.each do |comment|
+  .comment
+    %h4= comment.title
+    %h6= comment.body
+    %label{:for => "comment.user.name"}> Created by:
+    = " #{comment.user.name}"
+    %br/
+    = link_to "Delete", comment_path(comment.id), method: :delete, class:'btn btn-danger'
