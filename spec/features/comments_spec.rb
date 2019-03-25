@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Comment", type: :feature do
-  let(:user) { User.create(email: "example@gmail.com", password: "password") }
+  let(:user) { User.create(email: "example@gmail.com", password: "password",  name: "Asia") }
   let(:genre) { Genre.create }
   let(:movie) { Movie.create(genre_id: genre.id) }
 
@@ -68,6 +68,26 @@ RSpec.feature "Comment", type: :feature do
         click_button "Add comment"
 
         expect(page).to have_content("Movie can be commented only once!")
+      end
+    end
+  end
+
+  describe "#top_commenters" do
+    let(:user2) { User.create(email: "user2@gmail.com", password: "password", name: "Kasia") }
+    let(:movie2) { Movie.create(genre_id: genre.id) }
+    let!(:comment) { Comment.create(title: "title", body: "body", movie_id: movie.id, user_id: user2.id) }
+    let!(:comment2) { Comment.create(title: "title", body: "body", movie_id: movie2.id, user_id: user2.id) }
+    let!(:comment3) { Comment.create(title: "title", body: "body", movie_id: movie.id, user_id: user.id) }
+
+    it "will display proper order" do
+      visit top_commenters_path
+      print page.html
+      within(:xpath, "/html/body/main/div/table/tbody/tr[2]") do
+        expect(page).to have_content('Kasia')
+      end
+
+      within(:xpath, "/html/body/main/div/table/tbody/tr[3]") do
+        expect(page).to have_content('Asia')
       end
     end
   end
