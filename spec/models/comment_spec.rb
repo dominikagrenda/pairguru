@@ -27,17 +27,16 @@ require "rails_helper"
 
     it "is not valid without user_id" do
       subject.user = nil
-
       expect(subject).to_not be_valid
     end
   end
 
   context "for the same movie" do
     it "is not valid" do
-        subject.save
-        comment = Comment.new(title: title, body: body, movie: movie, user: user)
+      subject.save
+      comment = Comment.new(title: title, body: body, movie: movie, user: user)
 
-        expect(comment).to_not be_valid
+      expect(comment).to_not be_valid
     end
   end
 end
