@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Comment", type: :feature do
-  let(:user) { User.create(email: "example@gmail.com", password: "password") }
+  let(:user) { User.create(email: "example@gmail.com", password: "password", name: "Asia") }
   let(:genre) { Genre.create }
   let(:movie) { Movie.create(genre_id: genre.id) }
 
@@ -30,7 +30,14 @@ RSpec.feature "Comment", type: :feature do
     end
 
     context "after destroying previous comment" do
-      let!(:comment) { Comment.create(title: "title", body: "body", movie_id: movie.id, user_id: user.id) }
+      let!(:comment) do
+        Comment.create(
+          title: "title",
+          body: "body",
+          movie_id: movie.id,
+          user_id: user.id
+        )
+      end
 
       it "will create a comment" do
         visit "/movies/#{movie.id}"
@@ -58,7 +65,14 @@ RSpec.feature "Comment", type: :feature do
     end
 
     context "with another comment existing" do
-      let!(:comment) { Comment.create(title: "title", body: "body", movie_id: movie.id, user_id: user.id) }
+      let!(:comment) do
+        Comment.create(
+          title: "title",
+          body: "body",
+          movie_id: movie.id,
+          user_id: user.id
+        )
+      end
 
       it "will not create a comment" do
         visit "/movies/#{movie.id}"
@@ -68,6 +82,50 @@ RSpec.feature "Comment", type: :feature do
         click_button "Add comment"
 
         expect(page).to have_content("Movie can be commented only once!")
+      end
+    end
+  end
+
+  describe "#top_commenters" do
+    let(:user2) { User.create(email: "user2@gmail.com", password: "password", name: "Kasia") }
+    let(:movie2) { Movie.create(genre_id: genre.id) }
+
+    let!(:comment) do
+      Comment.create(
+        title: "title",
+        body: "body",
+        movie_id: movie.id,
+        user_id: user2.id
+      )
+    end
+
+    let!(:comment2) do
+      Comment.create(
+        title: "title",
+        body: "body",
+        movie_id: movie2.id,
+        user_id: user2.id
+      )
+    end
+
+    let!(:comment3) do
+      Comment.create(
+        title: "title",
+        body: "body",
+        movie_id: movie.id,
+        user_id: user.id
+      )
+    end
+
+    it "will display proper order" do
+      visit top_commenters_path
+
+      within(:xpath, "/html/body/main/div/table/tbody/tr[2]") do
+        expect(page).to have_content("Kasia")
+      end
+
+      within(:xpath, "/html/body/main/div/table/tbody/tr[3]") do
+        expect(page).to have_content("Asia")
       end
     end
   end

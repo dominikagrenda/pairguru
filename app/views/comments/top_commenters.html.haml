@@ -1,0 +1,11 @@
+%h1.text-center Top commenters
+
+%table
+  %tbody
+    %tr
+      %th Commenter
+      %th Comment count
+    - @commenters.each do |commenter|
+      %tr
+        %td= commenter.name
+        %td= commenter.comments.count

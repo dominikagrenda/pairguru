@@ -27,6 +27,10 @@ class CommentsController < ApplicationController
     end
   end
 
+  def top_commenters
+    @commenters = TopCommenters.new.call
+  end
+
   private
 
   def comment_params
