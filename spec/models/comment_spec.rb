@@ -1,11 +1,11 @@
 require "rails_helper"
 
- RSpec.describe Comment, type: :model do
-  let!(:title) { "Comment title" }
-  let!(:body) { "Comment body" }
-  let!(:movie) { Movie.new(title: "Movie title") }
-  let!(:movie_2) { Movie.new(title: "Movie title") }
-  let!(:user) { User.new(email: "example@mail.com", password: "password") }
+RSpec.describe Comment, type: :model do
+  let(:title) { "Comment title" }
+  let(:body) { "Comment body" }
+  let(:movie) { Movie.new(title: "Movie title") }
+  let(:movie_2) { Movie.new(title: "Movie title") }
+  let(:user) { User.new(email: "example@mail.com", password: "password") }
 
   subject { Comment.new(title: title, body: body, movie: movie, user: user) }
 

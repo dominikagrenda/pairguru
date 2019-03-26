@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 
     if comment.save
       redirect_back fallback_location: movies_path,
-                    notice: t('comment.created')
+                    notice: t("comment.created")
     else
       redirect_back fallback_location: movies_path,
                     alert: error_messages(comment)
@@ -20,10 +20,10 @@ class CommentsController < ApplicationController
     if current_user == comment.user
       comment.destroy
       redirect_back fallback_location: movies_path,
-                    notice: t('comment.deleted')
+                    notice: t("comment.deleted")
     else
       redirect_back fallback_location: movies_path,
-                    alert: t('comment.delete_own')
+                    alert: t("comment.delete_own")
     end
   end
 

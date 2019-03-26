@@ -5,5 +5,5 @@ class Comment < ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true
 
-  validates :movie_id, uniqueness: {scope: :user_id, message: "Movie can be commented only once!"}
+  validates :movie_id, uniqueness: { scope: :user_id, message: "Movie can be commented only once!" }
 end
