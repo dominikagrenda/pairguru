@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Comment", type: :feature do
-  let(:user) { User.create(email: "example@gmail.com", password: "password",  name: "Asia") }
+  let(:user) { User.create(email: "example@gmail.com", password: "password", name: "Asia") }
   let(:genre) { Genre.create }
   let(:movie) { Movie.create(genre_id: genre.id) }
 
