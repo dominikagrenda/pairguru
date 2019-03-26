@@ -14,7 +14,7 @@ RSpec.describe TopCommenters do
         expect(sql.squish).to eq(<<-SQL.squish)
           SELECT  "users".* FROM "users" INNER JOIN "comments"
           ON "comments"."user_id" = "users"."id" WHERE
-          (comments.created_at >= '#{1.week.ago.strftime("%Y-%m-%d %H:%M:%S.%6N")}')
+          (comments.created_at >= '#{1.week.ago.strftime('%Y-%m-%d %H:%M:%S.%6N')}')
           GROUP BY users.id ORDER BY count(comments.id) DESC LIMIT 10
         SQL
       end

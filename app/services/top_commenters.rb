@@ -9,10 +9,10 @@ class TopCommenters
 
   def top_commenters
     User
-    .joins(:comments)
-    .group("users.id")
-    .where("comments.created_at >= ?", 1.week.ago)
-    .order(Arel.sql("count(comments.id) DESC"))
-    .limit(10)
+      .joins(:comments)
+      .group("users.id")
+      .where("comments.created_at >= ?", 1.week.ago)
+      .order(Arel.sql("count(comments.id) DESC"))
+      .limit(10)
   end
 end
