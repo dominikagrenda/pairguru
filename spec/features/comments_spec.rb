@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Comment", type: :feature do
   let(:user) { User.create(email: "example@gmail.com", password: "password", name: "Asia") }
   let(:genre) { Genre.create }
-  let(:movie) { Movie.create(genre_id: genre.id) }
+  let(:movie) { Movie.create(genre_id: genre.id, title: "title") }
 
   before(:each) do
     visit user_session_path
@@ -88,7 +88,7 @@ RSpec.feature "Comment", type: :feature do
 
   describe "#top_commenters" do
     let(:user2) { User.create(email: "user2@gmail.com", password: "password", name: "Kasia") }
-    let(:movie2) { Movie.create(genre_id: genre.id) }
+    let(:movie2) { Movie.create(genre_id: genre.id, title: "title") }
 
     let!(:comment) do
       Comment.create(
